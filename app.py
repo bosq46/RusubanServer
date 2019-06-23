@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-from flask import Flask, request, jsonify, make_response
 import os
 import werkzeug
+from flask import Flask, request, jsonify, make_response
 from datetime import datetime
 
 app = Flask(__name__)
@@ -20,14 +20,15 @@ def upload_audio():
         make_response(jsonify({'result': 'audio is required.'}))
 
     file = request.files['audio']
-    fileName = file.filename
-    if '' == fileName:
-        make_response(jsonify({'result':'filename must not empty.'}))
+    file_name = file.filename
+    if '' == file_name:
+        make_response(jsonify({'result': 'filename must not empty.'}))
 
-    saveFileName = datetime.now().strftime("%Y%m%d%Ht %M%S_") \
-        + werkzeug.utils.secure_filename(fileName)
-    file.save(os.path.join(UPLOAD_DIR, saveFileName))
-    return make_response(jsonify({'result':'upload OK.'}))
+    save_file_name = datetime.now().strftime("%Y%m%d%H%M%S_") \
+        + werkzeug.utils.secure_filename(file_name)
+    file.save(os.path.join(UPLOAD_DIR, save_file_name))
+
+    return make_response(jsonify({'result': 'upload OK.'}))
 
 
 @app.errorhandler(werkzeug.exceptions.RequestEntityTooLarge)
@@ -37,6 +38,5 @@ def handle_over_max_file_size(error):
 
 
 if __name__ == "__main__":
-
     app.run(debug=True)
 
