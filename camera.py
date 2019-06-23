@@ -6,7 +6,7 @@ CAP_DIR = "./img/"
 
 
 def capture_camera(file_path, size=None):
-    cap = cv2.VideoCapture(0)#-1)  # カメラのデバイス番号
+    cap = cv2.VideoCapture(-1)  # カメラのデバイス番号
     cap.read()  # 初回のキャプチャは失敗する.
     ret, frame = cap.read()  # retは画像を取得成功フラグ
 
@@ -35,6 +35,18 @@ def record_capture(cap_file_path):
 
     with open(cap_list_path, mode='a') as f:
         f.write(cap_file_path+"\n")
+
+    print(get_cap_list())
+
+
+def get_cap_list(latest=3):
+    cap_list_path = CAP_DIR+"cap.list"
+
+    with open(cap_list_path, mode='r') as f:
+        cap_list_lines = f.readlines()
+
+    latest_files = [file_path.rstrip() for file_path in cap_list_lines[-1 * int(latest):]]
+    return latest_files
 
 
 if __name__ == "__main__":
