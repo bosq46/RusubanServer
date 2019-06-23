@@ -15,7 +15,7 @@ UPLOAD_DIR = "./uploads"
 
 
 @app.route('/upload', methods=['POST'])
-def post_comment():
+def upload_audio():
     if 'audio' not in request.files:
         make_response(jsonify({'result': 'audio is required.'}))
 
@@ -24,7 +24,7 @@ def post_comment():
     if '' == fileName:
         make_response(jsonify({'result':'filename must not empty.'}))
 
-    saveFileName = datetime.now().strftime("%Y%m%d_%H%M%S_") \
+    saveFileName = datetime.now().strftime("%Y%m%d%H%M%S_") \
         + werkzeug.utils.secure_filename(fileName)
     file.save(os.path.join(UPLOAD_DIR, saveFileName))
     return make_response(jsonify({'result':'upload OK.'}))
