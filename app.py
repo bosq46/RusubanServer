@@ -37,6 +37,16 @@ def handle_over_max_file_size(error):
     return 'result : file size is overed.'
 
 
+@app.route('/images', methods=['GET'])
+def get_images():
+    from camera import get_cap_list
+    latest_captures = get_cap_list()
+
+    if latest_captures:
+        return "".join(latest_captures)
+    return "Capture image is None."
+
+
 if __name__ == "__main__":
     app.run(debug=True)
 
