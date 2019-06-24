@@ -14,9 +14,12 @@ def play_audio(file_path):
 
 
 if __name__ == "__main__":
-    args = sys.argv
-    if len(args) < 2:
-        print("Please Input MP3 FILE NAME.")
-        exit(1)
-
-    play_audio(args[1])
+    # args = sys.argv
+    # if len(args) < 2:
+    #     print("Please Input MP3 FILE NAME.")
+    #     exit(1)
+    # play_audio(args[1])
+    import glob
+    audio_files = glob.glob("./uploads/*")
+    if len(audio_files):
+        play_audio(audio_files[-1])
