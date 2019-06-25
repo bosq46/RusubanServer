@@ -26,8 +26,11 @@ def upload_audio():
 
     save_file_name = datetime.now().strftime("%Y%m%d%H%M%S_") \
         + werkzeug.utils.secure_filename(file_name)
+    save_file_name = save_file_name.replace(".mp3", ".mp4")
     file.save(os.path.join(UPLOAD_DIR, save_file_name))
 
+    from ffmpeg import conv_mp4_mp3
+    conv_mp4_mp3(save_file_name, save_file_name.replace(".mp4", ".mp3"))
     return make_response(jsonify({'result': 'upload OK.'}))
 
 
